@@ -22,15 +22,17 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->name;
+        $name = $this->faker->safeColorName;
         $fileRealPath = UploadedFile::fake()
-            ->create($name . 'png', 10, 'image/png')
+            ->create($name, 10, 'image/png')
             ->store('products');
 
         return [
             'name' => $name,
             'price' => $this->faker->randomNumber,
+            'description' => $this->faker->realText($maxNbChars = 100),
             'image_path' => $fileRealPath,
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now')
         ];
     }
 }
