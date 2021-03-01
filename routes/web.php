@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TopController;
+use \App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,8 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/', [TopController::class, 'index']);
+    Route::get('/', [TopController::class, 'index'])->name('top');
+    Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 });
 
 require __DIR__.'/auth.php';
