@@ -15,7 +15,7 @@
                     <p>下記商品をカートに追加しました</p>
 
                     <div class="h-15 w-30">
-                        <a href="" class="border-2 border-blue-500 rounded-full font-bold text-blue-500 px-4 py-3 transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white mr-6">
+                        <a href="{{ route('cart.index') }}" class="border-2 border-blue-500 rounded-full font-bold text-blue-500 px-4 py-3 transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white mr-6">
                             カートを見る
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-span-4 sm:col-span-2 md:col-span-6 xl:col-span-8">
                                 <img
-                                    alt="$product->name"
+                                    alt="{{ $product->name }}"
                                     src="{{ asset('storage/'.$product->image_path) }}"
                                     class="h-24 w-24 rounded mx-auto"
                                 />

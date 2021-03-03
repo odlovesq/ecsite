@@ -23,7 +23,10 @@ Route::get('/', [TopController::class, 'index'])->name('top');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 Route::prefix('cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/', [CartController::class, 'create']);
+    Route::delete('/', [CartController::class, 'delete'])->name('delete');
+    Route::post('/update', [CartController::class, 'update'])->name('update');
     Route::get('/thanks', [CartController::class, 'thanks'])->name('thanks');
 });
 

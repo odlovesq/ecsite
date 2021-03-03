@@ -8,12 +8,25 @@ use Illuminate\Validation\ValidationException;
 class CartService{
     const CART_SESSION_KEY = 'cart_products';
 
+    public function getCartProducts()
+    {
+        $cartProducts = Arr::wrap(session(self::CART_SESSION_KEY));
+        $cartProductIds = array_keys($cartProducts);
+        $products = Product::find($cartProductIds);
+        return Product::find($cartProductIds)->map(function ($product) use ($cartProducts) {
+            return [
+                "product" => $product,
+                "quantity" => Arr::get($cartProducts, $product->id)
+            ];
+        }, $products);
+    }
+
     public function getSubTotal()
     {
         $cartProducts = Arr::wrap(session(self::CART_SESSION_KEY));
         $cartProductIds = array_keys($cartProducts);
         $products = Product::find($cartProductIds);
-        return array_reduce($cartProductIds, function($carry, $cartProductId) use ($products, $cartProducts) {
+        return array_reduce($cartProductIds, function ($carry, $cartProductId) use ($products, $cartProducts) {
             $price = Arr::first($products, function ($product) use ($cartProductId) {
                 return $product->id == $cartProductId;
             })->price;
@@ -48,5 +61,17 @@ class CartService{
         }
 
         session()->put($cartProductKey, $productQuantity);
+    }
+
+    public function updateCart($cartProduct)
+    {
+        $cartProductKey = self::CART_SESSION_KEY.'.'.Arr::get($cartProduct, 'product_id');
+        $quantity = (int) Arr::get($cartProduct, 'quantity');
+        session()->put($cartProductKey, $quantity);
+    }
+
+    public function deleteProduct($productId)
+    {
+        session()->forget(self::CART_SESSION_KEY.'.'.$productId);
     }
 }
