@@ -15,6 +15,10 @@
                     <x-nav-link :href="route('top')" :active="request()->routeIs('top')">
                         {{ __('Top') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                        {{ __('Cart') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -73,6 +77,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('top')" :active="request()->routeIs('top')">
                 {{ __('Top') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                {{ __('Cart') }}
             </x-responsive-nav-link>
         </div>
 

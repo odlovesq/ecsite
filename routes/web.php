@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TopController;
 use \App\Http\Controllers\ProductController;
 use \App\Http\Controllers\CartController;
+use \App\Http\Controllers\PurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,11 @@ use \App\Http\Controllers\CartController;
 */
 
 Route::middleware(['auth'])->group(function () {
+    Route::prefix('purchase')->name('purchase.')->group(function () {
+        Route::get('/new', [PurchaseController::class, 'new'])->name('new');
+        Route::post('/', [PurchaseController::class, 'create'])->name('create');
+        Route::get('/thanks', [PurchaseController::class, 'thanks'])->name('thanks');
+    });
 });
 
 Route::get('/', [TopController::class, 'index'])->name('top');

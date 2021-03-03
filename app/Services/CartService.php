@@ -21,6 +21,12 @@ class CartService{
         }, $products);
     }
 
+    public function getCartProductIds()
+    {
+        $cartProducts = Arr::wrap(session(self::CART_SESSION_KEY));
+        return array_keys($cartProducts);
+    }
+
     public function getSubTotal()
     {
         $cartProducts = Arr::wrap(session(self::CART_SESSION_KEY));
@@ -73,5 +79,10 @@ class CartService{
     public function deleteProduct($productId)
     {
         session()->forget(self::CART_SESSION_KEY.'.'.$productId);
+    }
+
+    public function clear()
+    {
+        session()->forget(self::CART_SESSION_KEY);
     }
 }
